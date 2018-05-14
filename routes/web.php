@@ -11,6 +11,26 @@
 |
 */
 
+/*
 Route::get('/', function () {
     return view('shop/index');
 });
+*/
+
+Route::get('/', [
+    'uses' => 'ProductController@getIndex',
+    //route name
+    'as' => 'product.index'
+]);
+
+Route::get('/signup', [
+    'uses' => 'UserController@getSignup',
+    //route name
+    'as' => 'user.signup'
+]);
+
+Route::post('/signup', [
+    'uses' => 'UserController@postSignup',
+    //route name
+    'as' => 'user.signup'
+]);
