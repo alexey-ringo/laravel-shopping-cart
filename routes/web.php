@@ -23,14 +23,63 @@ Route::get('/', [
     'as' => 'product.index'
 ]);
 
-Route::get('/signup', [
-    'uses' => 'UserController@getSignup',
+Route::get('/', [
+    'uses' => 'ProductController@getIndex',
     //route name
-    'as' => 'user.signup'
+    'as' => 'login'
+    
 ]);
 
-Route::post('/signup', [
-    'uses' => 'UserController@postSignup',
-    //route name
-    'as' => 'user.signup'
-]);
+Route::group(['prefix' => 'user'], function() {
+    
+    Route::group(['middleware' => 'guest'], function() {
+        
+        Route::get('/signup', [
+            'uses' => 'UserController@getSignup',
+            //route name
+            'as' => 'user.signup',
+            //'middleware' => 'guest'
+        ]);
+    
+        Route::post('/signup', [
+            'uses' => 'UserController@postSignup',
+            //route name
+            'as' => 'user.signup',
+            //'middleware' => 'guest'
+        ]);
+
+        Route::get('/signin', [
+            'uses' => 'UserController@getSignin',
+            //route name
+            'as' => 'user.signin',
+            //'middleware' => 'guest'
+    ]);
+
+        Route::post('/signin', [
+            'uses' => 'UserController@postSignin',
+            //route name
+            'as' => 'user.signin',
+            //'middleware' => 'guest'
+        ]);
+    });
+    
+    Route::group(['middleware' => 'auth'], function() {
+        Route::get('/profile', [
+            'uses' => 'UserController@getProfile',
+            //route name
+            'as' => 'user.profile',
+            //'middleware' => 'auth'
+        ]);
+
+        Route::get('/logout', [
+            'uses' => 'UserController@getLogout',
+            //route name
+            'as' => 'user.logout',
+            //'middleware' => 'auth'
+        ]);
+        
+    });
+    
+});
+
+

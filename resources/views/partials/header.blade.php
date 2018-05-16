@@ -21,10 +21,13 @@
           User Management
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          @if(Auth::check())
+          <a class="dropdown-item" href="{{ route('user.logout') }}">Logout</a>
+          @else
           <a class="dropdown-item" href="{{ route('user.signup') }}">Sign Up</a>
-          <a class="dropdown-item" href="#">Another action</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Logout</a>
+          <a class="dropdown-item" href="{{ route('user.signin') }}">Sign In</a>
+          @endif
         </div>
       </li>
       
